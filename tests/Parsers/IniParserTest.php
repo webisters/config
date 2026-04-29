@@ -1,0 +1,28 @@
+<?php
+/*
+ * This file is part of Webisters Config Library.
+ *
+ * (c) Hafiz Muhammad Moaz <thewebisters@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Tests\Config\Parsers;
+
+use Framework\Config\Parsers\IniParser;
+use Framework\Config\Parsers\ParserException;
+
+final class IniParserTest extends ParserTestCase
+{
+    protected mixed $config = __DIR__ . '/../configs/config.ini';
+    protected string $parserClass = IniParser::class;
+
+    public function testParseException() : void
+    {
+        $this->expectException(ParserException::class);
+        $this->expectExceptionMessageMatches(
+            '#^' . \strtr(IniParser::class, ['\\' => '\\\\']) . ': syntax error, +#'
+        );
+        IniParser::parse(__FILE__);
+    }
+}
